@@ -11,13 +11,15 @@ Please open an new issue if you have problem to use this tool.
 
 **Requirements**
 
-- Python 2.7
+- Python 3.x
 - Google Chrome
 - ChromeDriver - WebDriver for Chrome
 
 The latest version of Chrome webdriver can be found at link below and the **Setup** instruction can also be found at the same page,
 
 https://sites.google.com/a/chromium.org/chromedriver/downloads
+
+(On Windows if using Cmder, this can be placed in cmder\vendor\conemu-maximus5\ConEmu\Scripts\.)
 
 To install Python dependencies,
 
@@ -44,7 +46,7 @@ Options:
   --id TEXT          Frontend Master Username
   --password TEXT    Frontend Master Password
   --mute-audio       Mute Frontend Master browser tab
-  --high-resolution  Download high resolution videos
+  --high-resolution  Download high resolution videos (currently not working, set Minimum Video Quality in My Account: Settings)
   --video-per-video  Download one video at a time
   --help             Show this message and exit.
 ```
@@ -52,7 +54,7 @@ Options:
 To download one particular course,
 
 ```bash
-python frontendmasters-dl.py --id YOUR-USERNAME --password YOUR-PASSWORD --course COURSE-ID --mute-audio --high-resolution
+python frontendmasters-dl.py --id YOUR-USERNAME --password YOUR-PASSWORD --course COURSE-ID --mute-audio --video-per-video
 ```
 
 Alternatively you can use interactive prompt by running the script directly,
@@ -64,6 +66,8 @@ python frontendmasters-dl.py
 The default download path is `./Download` inside the repository directory.
 
 ### Change Log
+
+[04/04/2018] - Updated compatibility for Python 3
 
 [01/04/2017] - Convert the existing script into command-line tool
 

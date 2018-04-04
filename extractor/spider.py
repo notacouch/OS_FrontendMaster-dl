@@ -1,13 +1,27 @@
 from bs4                             import BeautifulSoup
 from selenium                        import webdriver
 from selenium.webdriver.common.keys  import Keys
-from urllib2                         import urlopen, URLError, HTTPError
-from helper                          import *
+# https://stackoverflow.com/a/6594775
+# https://stackoverflow.com/a/17330923/781824
+try:
+    from urllib.request                         import urlopen, URLError, HTTPError
+except ImportError:
+    from urllib2                         import urlopen, URLError, HTTPError
+# https://stackoverflow.com/a/12173406/781824
+from .helper                          import *
 
-import httplib
-import cookielib
+# https://stackoverflow.com/questions/13778252/import-httplib-importerror-no-module-named-httplib
+try:
+    import http.client
+except ImportError:
+    import httplib
+# https://stackoverflow.com/a/9857747/781824
+try:
+    import http.cookiejar
+except ImportError:
+    import cookielib
 import json
-import mechanize
+import mechanicalsoup
 import os
 import time
 
@@ -20,6 +34,10 @@ URL_COURSE_LIST               = 'https://frontendmasters.com/courses/'
 class Spider(object):
     def __init__(self, mute_audio):
         options = webdriver.ChromeOptions()
+        # Optionally set to Canary or alternative Chrome location
+        # https://stackoverflow.com/a/18499368/781824
+        # https://stackoverflow.com/a/45503916/781824
+        #options.binary_location = "drive:/path/to/chrome.exe"
 
         # FM detects useragent and says 403 as return
         # so we just define valid useragent
@@ -46,7 +64,7 @@ class Spider(object):
 
     def download(self, course, high_resolution, video_per_video):
         if self.browser.find_elements_by_class_name('Message'):
-            print "Your username/password was incorrect"
+            print("Your username/password was incorrect")
             exit(1)
         # Get detailed course list
         course_detailed_list = self._get_detailed_course_list(course)
@@ -170,8 +188,8 @@ class Spider(object):
                     time.sleep(8)
 
                     while self.browser.find_elements_by_class_name('Message'):
-                        print "429: You have reached maximum request limit. " \
-                              "Sleeping for 15 minutes"
+                        print("429: You have reached maximum request limit. " \
+                              "Sleeping for 15 minutes")
                         time.sleep(15 * 60)
                         self.browser.refresh()
                         time.sleep(10)

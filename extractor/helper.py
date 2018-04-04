@@ -2,7 +2,12 @@ import glob
 import os
 import os.path
 import string
-from urllib2 import urlopen, URLError, HTTPError
+# https://stackoverflow.com/a/6594775
+# https://stackoverflow.com/a/17330923/781824
+try:
+    from urllib.request                         import urlopen, URLError, HTTPError
+except ImportError:
+    from urllib2                         import urlopen, URLError, HTTPError
 
 def format_filename(filename_str):
     s = filename_str
